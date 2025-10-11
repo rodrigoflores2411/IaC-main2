@@ -74,3 +74,4 @@
     - name: Reiniciar contenedor NGINX (reload falló)
       command: "docker restart {{ nginx_container }}"
       when: reload_result.rc != 0
+      

@@ -1,0 +1,71 @@
+version: "3.9"
+
+services:
+  api-gateway:
+    image: nginx:alpine
+    container_name: api-gateway
+    ports:
+      - "80:80"
+    volumes:
+      - ./Configuracion/nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - app-net
+      - monitor-net
+    depends_on:
+      - nginx-lb
+      - grafana
+    restart: unless-stopped
+
+  nginx-lb:
+    image: nginx:alpine
+    container_name: nginx-lb
+    expose:
+      - "8080"
+    volumes:
+      - ./Configuracion/nginx-lb.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - app-net
+    depends_on:
+      - app1
+      - app2
+      - app3
+    restart: unless-stopped
+
+  app1:
+    image: hashicorp/http-echo:1.0
+    hostname: app1
+    command: ["-listen", ":2000", "-text", "App1 Grupo6"]
+    networks:
+      - app-net
+    restart: unless-stopped
+
+  app2:
+    image: hashicorp/http-echo:1.0
+    hostname: app2
+    command: ["-listen", ":4000", "-text", "App2 Grupo6"]
+    networks:
+      - app-net
+    restart: unless-stopped
+
+  app3:
+    image: hashicorp/http-echo:1.0
+    hostname: app3
+    command: ["-listen", ":5000", "-text", "App3 Grupo6"]
+    networks:
+      - app-net
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    expose:
+      - "3000"
+    networks:
+      - monitor-net
+    restart: unless-stopped
+
+networks:
+  app-net:
+    driver: bridge
+  monitor-net:
+    driver: bridge

@@ -16,3 +16,4 @@ variable "redis_external_port" {
 variable "postgre_external_port" {
   description = "Coloca el puerto de NGINX"
 }
+

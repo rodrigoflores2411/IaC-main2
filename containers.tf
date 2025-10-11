@@ -12,6 +12,7 @@ resource "docker_container" "app1" {
   depends_on = [docker_container.grafana]
 }
 
+
 resource "docker_container" "app2" {
 
   name  = "nginx_02-${terraform.workspace}"

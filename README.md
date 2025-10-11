@@ -1,35 +1,10 @@
 
-Integrantes del Grupo 6
-Rodrigo Flores Alvarez
+TRABAJO DE REFORZAMIENTO CREADO POR RODRIGO FLORES ALVAREZ
 
-Julio Cedamanos Guevara
+SIGUE LO TRABAJADO EN EL LABORATORIO ANSIBLE+ NGINX
 
-Bryam Gutierrez Rubio
+ESTE TRABAJO AGREGA UN API GATEWAY COMO IMPLEMENTACIÓN ADICIONAL AL TRABAJO 
 
-Luis Ibañez Herrera
-
-Descripción
-Este proyecto implementa una arquitectura que despliega los siguientes servicios:
-
-3 aplicaciones basadas en Nginx (app1, app2, app3)
-
-Una base de datos PostgreSQL
-
-Un sistema de caché Redis
-
-Un servicio de monitorización con Grafana
-
-Estructura del Proyecto
-text
-├── containers.tf          # Definición de contenedores (apps, grafana, redis, postgres)
-├── main.tf               # Configuración principal y provider
-├── nginx.tf              # Configuración específica para apps Nginx
-├── redes.tf              # Definición de redes Docker
-├── variables.tf          # Declaración de variables
-├── terraform.tfvars      # Valores de variables (credenciales, puertos, etc.)
-├── terraform.tfstate     # Estado de infraestructura (NO editar)
-└── terraform.tfstate.d/  # Estados parciales
-Arquitectura
 Los servicios se agrupan en redes Docker específicas:
 
 app_net: Conexión de aplicaciones Nginx
@@ -51,31 +26,58 @@ Docker instalado y en ejecución
 
 Acceso a internet para descargar imágenes de Docker Hub
 
-Despliegue
-Inicializar Terraform:
 
-bash
-terraform init
-Revisar el plan de ejecución:
+## Despliegue
 
-bash
-terraform plan
-Aplicar la configuración:
+El sistema se despliega en AWS y también puede publicarse en GitHub Pages para fines de demostración.
 
-bash
-terraform apply
-Verificación
-Acceder a los servicios:
-
-Aplicaciones Nginx: puertos configurados en terraform.tfvars
-
-Grafana: puerto 3000 (por defecto)
-
-Verificar contenedores en ejecución:
-
-bash
+COMANDOS DE DESPLIEGUE:
+Iniciar sesión de docker:
+````````````
+docker login
+````````````
+Para visualizar los contenedores en docker:
+````````````
 docker ps
-Verificar redes Docker creadas:
+````````````
+Inicializar Terraform:
+````````````
+terraform init
+````````````
+Revisar el plan de ejecución:
+````````````
+terraform plan
+````````````
+Aplicar la configuración:
+````````````
+terraform apply 
+````````````
+Levantamiento del stack por Docker Compose:
+````````````
+docker compose up -d
+````````````
+En caso de error al levantamiento/ eliminar el docker compose:
+````````````
+docker compose down
+````````````
+Pruebas del health check del API GATEWAY:
+````````````
+curl http://localhost/health
+````````````
+Pruebas para probar los microservicios a traves del API GATEWAY:
+````````````
+curl http://localhost/api/app1
+curl http://localhost/api/app2
+curl http://localhost/api/app3
+````````````
+Prueba del grafana:
+````````````
+curl http://localhost/grafana/
+````````````
+Prueba de la red estatica:
+````````````
+curl http://localhost/web/
+````````````
 
-bash
-docker network ls
+
+---

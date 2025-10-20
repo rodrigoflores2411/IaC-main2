@@ -27,11 +27,9 @@ Docker instalado y en ejecución
 Acceso a internet para descargar imágenes de Docker Hub
 
 
-## Despliegue
+## Despliegue 
 
-El sistema se despliega en AWS y también puede publicarse en GitHub Pages para fines de demostración.
-
-COMANDOS DE DESPLIEGUE:
+COMANDOS:
 Iniciar sesión de docker:
 ````````````
 docker login
